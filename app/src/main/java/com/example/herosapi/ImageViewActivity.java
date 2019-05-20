@@ -17,7 +17,7 @@ public class ImageViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_view);
 
         imgView = findViewById(R.id.imgPhoto);
-        loadFromUrl();
+//        loadFromUrl();
     }
 
     private void StrictMode(){
@@ -25,12 +25,12 @@ public class ImageViewActivity extends AppCompatActivity {
         android.os.StrictMode.setThreadPolicy(policy);
     }
 
-    private void loadFromUrl() {
-        StrictMode();
-        try {
-            String imgUrl = "https://www.gststic.com/webp/gallery3/1.sm.png";
-            URL= new URL(imgUrl);
-
-        }
-    }
+//    private void loadFromUrl() {
+//        StrictMode();
+//        try {
+//            String imgUrl = "https://www.gststic.com/webp/gallery3/1.sm.png";
+//            URL= new URL(imgUrl);
+//
+//        }
+//    }
 }

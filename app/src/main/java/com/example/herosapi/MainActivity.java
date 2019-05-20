@@ -1,12 +1,22 @@
 package com.example.herosapi;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +32,9 @@ import url.Url;
 
 public class MainActivity extends AppCompatActivity {
     private EditText etName, etDesc;
+    private ImageView imgProfile;
     private Button btnSave;
+    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +43,15 @@ public class MainActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.etName);
         etDesc= findViewById(R.id.etDesc);
+        imgProfile = findViewById(R.id.imgProfile);
         btnSave = findViewById(R.id.btnSave);
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BrowseImage();
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +59,45 @@ public class MainActivity extends AppCompatActivity {
                 saveUsingField();
             }
         });
+    }
+
+    private void BrowseImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            if (data == null){
+                Toast.makeText(MainActivity.this, "Please Select Image",Toast.LENGTH_LONG).show();
+            }
+        }
+        Uri uri = data.getData();
+        imagePath = getRealPathFromUri(uri);
+        previewImage(imagePath);
+    }
+
+    private void previewImage(String imagePath) {
+        File imgFile = new File(imagePath);
+        if (imgFile.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+            imgProfile.setImageBitmap(myBitmap);
+        }
+    }
+
+    private String getRealPathFromUri(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(getApplicationContext(), uri, projection, null,null,null);
+        Cursor cursor = loader.loadInBackground();
+        int colIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(colIndex);
+        cursor.close();
+        return result;
     }
 
     private void save() {
