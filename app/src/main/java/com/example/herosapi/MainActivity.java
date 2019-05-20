@@ -5,11 +5,13 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,12 +19,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import heroesapi.HeroesAPI;
 import model.Heroes;
+import model.ImageResponse;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgProfile;
     private Button btnSave;
     String imagePath;
+    String imageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveUsingField();
+                saveUsingFieldMap();
             }
         });
     }
@@ -164,22 +172,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void saveUsingFieldMap() {
+        saveImageOnly();
         String name = etName.getText().toString();
         String desc= etDesc.getText().toString();
 
         Map <String, String> map =   new HashMap<>() ;
         map.put("name", name);
         map.put("desc", desc);
+        map.put("image", imageName);
 
-        Heroes heroes = new Heroes(name, desc);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Url.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        HeroesAPI heroesAPI = retrofit.create(HeroesAPI.class);
+        HeroesAPI heroesAPI = Url.getInstance().create(HeroesAPI.class);
         Call<Void> heroesCall = heroesAPI.addHero(map);
 
         heroesCall.enqueue(new Callback<Void>() {
@@ -198,5 +204,35 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Code : "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    private void StrictMode(){
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+    }
+
+    private void saveImageOnly(){
+        File file = new File(imagePath);
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("imageFile", file.getName(), requestBody);
+        HeroesAPI heroesAPI1 = Url.getInstance().create(HeroesAPI.class);
+        Call<ImageResponse> responseBodyCall = heroesAPI1.uploadImage(body);
+
+        StrictMode();
+
+        try {
+
+            Response<ImageResponse> imageResponseResponse = responseBodyCall.execute();
+            Log.d("mero", "saveImageOnly: " + imageResponseResponse.body().toString());
+            imageName = imageResponseResponse.body().getFileName();
+        }
+        catch (IOException e)
+        {
+            Toast.makeText(MainActivity.this, "error : "+e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+
     }
 }
