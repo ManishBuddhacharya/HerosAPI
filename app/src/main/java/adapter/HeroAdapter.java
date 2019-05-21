@@ -47,7 +47,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.HeroViewHolder
     @Override
     public void onBindViewHolder(@NonNull HeroViewHolder heroViewHolder, int i) {
         final Heroes item = heroLists.get(i);
-        String imagePath = Url.BASE_URL+"uploads"+item.getImage();
+        String imagePath = Url.BASE_URL+"uploads/"+item.getImage();
         StrictMode();
         try {
             URL url = new URL(imagePath);

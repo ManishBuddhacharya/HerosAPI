@@ -37,11 +37,8 @@ public class HeroesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Heroes>> call, Response<List<Heroes>> response) {
 
-                List<Heroes> heroList = response.body();
+                generateList(response.body());
 
-                for (Heroes hero: heroList){
-                    heroList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage()));
-                }
             }
 
             @Override
@@ -50,6 +47,15 @@ public class HeroesActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void generateList(List<Heroes> body) {
+        List<Heroes> heroList = body;
+
+        for (Heroes hero: heroList){
+            heroList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage()));
+        }
         HeroAdapter heroAdapter = new HeroAdapter(this, heroList);
         rvHeroes.setAdapter(heroAdapter);
         rvHeroes.setLayoutManager(new GridLayoutManager(this, 2));
