@@ -35,4 +35,11 @@
         android:layout_margin="20dp"
         android:text="Save"
         android:id="@+id/btnSave"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="View Data"
+        android:id="@+id/btnViewData"/>
 </android.support.v7.widget.LinearLayoutCompat>

@@ -40,7 +40,7 @@ import url.Url;
 public class MainActivity extends AppCompatActivity {
     private EditText etName, etDesc;
     private ImageView imgProfile;
-    private Button btnSave;
+    private Button btnSave, btnViewData;
     String imagePath;
     String imageName;
 
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         etDesc= findViewById(R.id.etDesc);
         imgProfile = findViewById(R.id.imgProfile);
         btnSave = findViewById(R.id.btnSave);
+        btnViewData = findViewById(R.id.btnViewData);
 
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveUsingFieldMap();
+            }
+        });
+
+        btnViewData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HeroesActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -196,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, HeroesActivity.class);
+                startActivity(intent);
 
             }
 

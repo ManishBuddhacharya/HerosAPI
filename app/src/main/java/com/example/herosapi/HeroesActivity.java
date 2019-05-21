@@ -52,16 +52,14 @@ public class HeroesActivity extends AppCompatActivity {
 
     private void generateList(List<Heroes> body) {
         List<Heroes> heroList = body;
+        List<Heroes> contactList = new ArrayList<>();
 
         for (Heroes hero: heroList){
-            heroList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage()));
+            contactList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage()));
         }
-        HeroAdapter heroAdapter = new HeroAdapter(this, heroList);
+        HeroAdapter heroAdapter = new HeroAdapter(this, contactList);
         rvHeroes.setAdapter(heroAdapter);
-        rvHeroes.setLayoutManager(new GridLayoutManager(this, 2));
+        rvHeroes.setLayoutManager(new GridLayoutManager(this, 1));
     }
 
-    private void getHeroes() {
-
-    }
 }
