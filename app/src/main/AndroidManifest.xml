@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ImageViewActivity"></activity>
+        <activity android:name=".HeroesActivity"></activity>
+        <activity android:name=".ImageViewActivity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

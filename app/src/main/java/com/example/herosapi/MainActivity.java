@@ -108,69 +108,69 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    private void save() {
-        String name = etName.getText().toString();
-        String desc= etDesc.getText().toString();
+//    private void save() {
+//        String name = etName.getText().toString();
+//        String desc= etDesc.getText().toString();
+//
+//        Heroes heroes = new Heroes(name, desc);
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(Url.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        HeroesAPI heroesAPI = retrofit.create(HeroesAPI.class);
+//        Call<Void> heroesCall = heroesAPI.addHero(heroes);
+//
+//        heroesCall.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (!response.isSuccessful()){
+//                    Toast.makeText(MainActivity.this, "Code : "+response.code(), Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Code : "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
-        Heroes heroes = new Heroes(name, desc);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Url.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        HeroesAPI heroesAPI = retrofit.create(HeroesAPI.class);
-        Call<Void> heroesCall = heroesAPI.addHero(heroes);
-
-        heroesCall.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(MainActivity.this, "Code : "+response.code(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Code : "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void saveUsingField() {
-        String name = etName.getText().toString();
-        String desc= etDesc.getText().toString();
-
-        Heroes heroes = new Heroes(name, desc);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Url.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        HeroesAPI heroesAPI = retrofit.create(HeroesAPI.class);
-        Call<Void> heroesCall = heroesAPI.addHero(name, desc);
-
-        heroesCall.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (!response.isSuccessful()){
-                    Toast.makeText(MainActivity.this, "Code : "+response.code(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Code : "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//    private void saveUsingField() {
+//        String name = etName.getText().toString();
+//        String desc= etDesc.getText().toString();
+//
+//        Heroes heroes = new Heroes(name, desc);
+//
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl(Url.BASE_URL)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        HeroesAPI heroesAPI = retrofit.create(HeroesAPI.class);
+//        Call<Void> heroesCall = heroesAPI.addHero(name, desc);
+//
+//        heroesCall.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                if (!response.isSuccessful()){
+//                    Toast.makeText(MainActivity.this, "Code : "+response.code(), Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_LONG).show();
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Code : "+t.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
 
 

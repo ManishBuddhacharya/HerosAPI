@@ -1,10 +1,18 @@
 package model;
 
 public class Heroes {
-    private String _id, name, desc;
+    private String _id, name, desc, image;
 
     public String get_id() {
         return _id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void set_id(String _id) {
@@ -27,8 +35,9 @@ public class Heroes {
         this.desc = desc;
     }
 
-    public Heroes( String name, String desc) {
+    public Heroes( String name, String desc, String image) {
         this.name = name;
         this.desc = desc;
+        this.image = image;
     }
 }
