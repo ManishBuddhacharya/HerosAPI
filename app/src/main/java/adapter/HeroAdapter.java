@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.herosapi.ItemDetailActivity;
 import com.example.herosapi.R;
 
 import java.io.IOException;
@@ -47,17 +48,30 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.HeroViewHolder
     @Override
     public void onBindViewHolder(@NonNull HeroViewHolder heroViewHolder, int i) {
         final Heroes item = heroLists.get(i);
-        String imagePath = Url.BASE_URL+"uploads/"+item.getImage();
+        final String imagePath = Url.BASE_URL+"uploads/"+item.getImage();
         StrictMode();
         try {
             URL url = new URL(imagePath);
             heroViewHolder.imgProfile.setImageBitmap(BitmapFactory.decodeStream((InputStream) url.getContent()));
+//            heroViewHolder.imgProfile.setImageBitmap(BitmapFactory.decodeStream(url.openConnection().getInputStream()));
         }
         catch (Exception e){
             e.printStackTrace();
         }
         heroViewHolder.tvName.setText(item.getName());
-        heroViewHolder.tvContact.setText(item.getDesc());
+        heroViewHolder.tvContact.setText(item.getPrice()+"");
+
+        heroViewHolder.imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ItemDetailActivity.class);
+                intent.putExtra("image", imagePath);
+                intent.putExtra("price", item.getPrice()+"");
+                intent.putExtra("name", item.getName());
+                intent.putExtra("description", item.getDesc());
+                mContext.startActivity(intent);
+            }
+        });
 
     }
 

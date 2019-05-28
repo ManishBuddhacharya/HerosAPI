@@ -6,6 +6,7 @@ import java.util.Map;
 import model.Heroes;
 import model.ImageResponse;
 import model.LoginSignupResponse;
+import model.Users;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,27 +19,22 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 
 public interface HeroesAPI {
-    @POST("heroes")
-    Call<Void> addHero(@Body Heroes heroes);
+    @POST("user")
+    Call<Void> insertUser(@Body Users user);
 
-    @FormUrlEncoded
-    @POST("heroes")
-    Call<Void> addHero(@Field("name")String name, @Field("desc")String desc);
+    @POST("item")
+    Call<Void> addItem(@Body Heroes heroes);
 
-    @FormUrlEncoded
-    @POST("heroes")
-    Call<Void> addHero(@FieldMap Map<String, String> map);
 
-    @FormUrlEncoded
-    @POST("users/login")
-    Call<LoginSignupResponse> checkUser(@Field("username") String username, @Field("password") String password);
+    @POST("user/login")
+    Call<LoginSignupResponse> loginUser(@Body Users user);
 
 
     @Multipart
-    @POST("upload")
+    @POST("item/upload")
     Call<ImageResponse> uploadImage(@Part MultipartBody.Part img);
 
-    @GET("heroes")
-    Call<List<Heroes>> getAllHeroes();
+    @GET("item")
+    Call<List<Heroes>> getAllItems();
 
 }

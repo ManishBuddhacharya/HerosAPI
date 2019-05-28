@@ -1,18 +1,26 @@
 package model;
 
 public class Heroes {
-    private String _id, name, desc, image;
+    private String _id, name, desc, imageName;
+    private double price;
+
+    public Heroes(String name, String desc, String imageName, double price) {
+        this.name = name;
+        this.desc = desc;
+        this.imageName = imageName;
+        this.price = price;
+    }
 
     public String get_id() {
         return _id;
     }
 
     public String getImage() {
-        return image;
+        return imageName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String imageName) {
+        this.imageName = imageName;
     }
 
     public void set_id(String _id) {
@@ -35,9 +43,11 @@ public class Heroes {
         this.desc = desc;
     }
 
-    public Heroes( String name, String desc, String image) {
-        this.name = name;
-        this.desc = desc;
-        this.image = image;
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

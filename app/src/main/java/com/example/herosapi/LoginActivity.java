@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import heroesapi.HeroesAPI;
 import model.LoginSignupResponse;
+import model.Users;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,11 +28,20 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkUser();
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -42,7 +52,9 @@ public class LoginActivity extends AppCompatActivity {
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        Call<LoginSignupResponse> userCall = heroesAPI.checkUser(username, password);
+        Users user = new Users(username, password);
+
+        Call<LoginSignupResponse> userCall = heroesAPI.loginUser(user);
 
         userCall.enqueue(new Callback<LoginSignupResponse>() {
             @Override
@@ -53,8 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     if (response.body().getSuccess()){
-                        Url.Cookie = response.headers().get("Set-Cookie");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Toast.makeText(LoginActivity.this, "Login Successful",Toast.LENGTH_LONG).show();
+
+//                        Url.Cookie = response.headers().get("Set-Cookie");
+                        Intent intent = new Intent(LoginActivity.this, HeroesActivity.class);
                         startActivity(intent);
                     }
                 }

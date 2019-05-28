@@ -1,9 +1,11 @@
 package com.example.herosapi;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import url.Url;
 
 public class HeroesActivity extends AppCompatActivity {
     private RecyclerView rvHeroes;
+    private Button btnAddItems;
     List<Heroes> heroList = new ArrayList<>();
 
     @Override
@@ -31,7 +34,7 @@ public class HeroesActivity extends AppCompatActivity {
 
         HeroesAPI heroAPI = Url.getInstance().create(HeroesAPI.class);
 
-        Call<List<Heroes>> listCall = heroAPI.getAllHeroes();
+        Call<List<Heroes>> listCall = heroAPI.getAllItems();
 
         listCall.enqueue(new Callback<List<Heroes>>() {
             @Override
@@ -47,6 +50,15 @@ public class HeroesActivity extends AppCompatActivity {
             }
         });
 
+        btnAddItems = findViewById(R.id.addItems);
+        btnAddItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HeroesActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -55,7 +67,7 @@ public class HeroesActivity extends AppCompatActivity {
         List<Heroes> contactList = new ArrayList<>();
 
         for (Heroes hero: heroList){
-            contactList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage()));
+            contactList.add(new Heroes(hero.getName(), hero.getDesc(), hero.getImage(), hero.getPrice()));
         }
         HeroAdapter heroAdapter = new HeroAdapter(this, contactList);
         rvHeroes.setAdapter(heroAdapter);
